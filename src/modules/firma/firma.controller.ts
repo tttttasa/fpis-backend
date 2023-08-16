@@ -16,11 +16,6 @@ export class FirmaController {
     await this.service.insert(firma);
   }
 
-  @Delete()
-  public async deleteFirma(@Body() firma: FirmaEntity) {
-    await this.service.delete(firma);
-  }
-
   @Put()
   public async putFirma(@Body() firma: FirmaEntity) {
     await this.service.update(firma);
