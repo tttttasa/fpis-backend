@@ -1,0 +1,40 @@
+## FPIS Project: Backend 
+
+# Developer environment
+.env
+
+# compiled output
+/dist
+/node_modules
+
+# Logs
+ogs
+*.log
+pm-debug.log*
+npm-debug.log*
+arn-debug.log*
+arn-error.log*
+erna-debug.log*
+
+# OS
+.DS_Store
+
+# Tests
+overage
+.nyc_output
+
+# IDEs and editors
+.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
