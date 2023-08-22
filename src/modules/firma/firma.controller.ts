@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { FirmaService } from '../firma/firma.service';
 import { FirmaEntity } from './entity/firma.entity';
 
@@ -9,6 +17,11 @@ export class FirmaController {
   @Get()
   public async getFirma() {
     return await this.service.findAll();
+  }
+
+  @Get(':naziv')
+  public async getSpecificFirma(@Param('naziv') naziv: string) {
+    return await this.service.find(naziv);
   }
 
   @Post()

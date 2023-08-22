@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { FirmaEntity } from './entity/firma.entity';
 import { FirmaDto } from './dto/firma.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,6 +13,10 @@ export class FirmaRepository {
 
   public findAll(): Promise<FirmaEntity[]> {
     return this.repository.find();
+  }
+
+  public find(naziv: string): Promise<FirmaEntity[]> {
+    return this.repository.find({ where: { nazivFirme: Like(`%${naziv}%`) } });
   }
 
   public insert(firma: FirmaDto) {

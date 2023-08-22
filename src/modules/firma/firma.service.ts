@@ -11,6 +11,10 @@ export class FirmaService {
     return this.firmaRepository.findAll();
   }
 
+  public find(naziv: string): Promise<FirmaEntity[]> {
+    return this.firmaRepository.find(naziv);
+  }
+
   public insert(firma: FirmaDto) {
     return this.firmaRepository.insert(firma);
   }

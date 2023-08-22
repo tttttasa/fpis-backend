@@ -3,6 +3,9 @@
 ```bash
 # copy .env file
 $ cp .env.example .env
+
+# install dependencies
+$ yarn install
 ```
 
 ## Database development
@@ -26,5 +29,4 @@ $ yarn run start
 
 # start server in watch mode
 $ yarn run start:dev
-
 ```
