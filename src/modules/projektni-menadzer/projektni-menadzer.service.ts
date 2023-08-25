@@ -4,9 +4,9 @@ import { ProjektniMenadzerRepository } from './projektni-menadzer.repository';
 
 @Injectable()
 export class ProjektniMenadzerService {
-  constructor(private readonly firmaRepository: ProjektniMenadzerRepository) {}
+  constructor(private readonly repository: ProjektniMenadzerRepository) {}
 
   public find(id: number): Promise<ProjektniMenadzerEntity> {
-    return this.firmaRepository.find(id);
+    return this.repository.find(id);
   }
 }

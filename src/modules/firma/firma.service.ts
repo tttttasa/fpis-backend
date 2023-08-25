@@ -5,21 +5,21 @@ import { FirmaDto } from '../firma/dto/firma.dto';
 
 @Injectable()
 export class FirmaService {
-  constructor(private readonly firmaRepository: FirmaRepository) {}
+  constructor(private readonly repository: FirmaRepository) {}
 
   public findAll(): Promise<FirmaEntity[]> {
-    return this.firmaRepository.findAll();
+    return this.repository.findAll();
   }
 
   public find(naziv: string): Promise<FirmaEntity[]> {
-    return this.firmaRepository.find(naziv);
+    return this.repository.find(naziv);
   }
 
   public insert(firma: FirmaDto) {
-    return this.firmaRepository.insert(firma);
+    return this.repository.insert(firma);
   }
 
   public update(firma: FirmaEntity) {
-    return this.firmaRepository.update(firma);
+    return this.repository.update(firma);
   }
 }

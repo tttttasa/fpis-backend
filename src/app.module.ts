@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FirmaModule } from './modules/firma/firma.module';
 import { ProjektniMenadzerModule } from './modules/projektni-menadzer/projektni-menadzer.module';
+import { SpisakGostijuModule } from './modules/spisak-gostiju/spisak-gostiju.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { ProjektniMenadzerModule } from './modules/projektni-menadzer/projektni-
     }),
     FirmaModule,
     ProjektniMenadzerModule,
+    SpisakGostijuModule,
   ],
   controllers: [],
   providers: [],
