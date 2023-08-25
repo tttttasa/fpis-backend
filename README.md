@@ -25,8 +25,8 @@ $ yarn run typeorm:run-migrations
 $ docker-compose up
 
 # run migrations and start server
-$ yarn run start
+$ yarn start
 
 # start server in watch mode
-$ yarn run start:dev
+$ yarn start:dev
 ```

@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FirmaModule } from './modules/firma/firma.module';
+import { ProjektniMenadzerModule } from './modules/projektni-menadzer/projektni-menadzer.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { FirmaModule } from './modules/firma/firma.module';
       autoLoadEntities: true,
     }),
     FirmaModule,
+    ProjektniMenadzerModule,
   ],
   controllers: [],
   providers: [],
