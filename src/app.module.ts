@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { FirmaModule } from './modules/firma/firma.module';
 import { ProjektniMenadzerModule } from './modules/projektni-menadzer/projektni-menadzer.module';
 import { SpisakGostijuModule } from './modules/spisak-gostiju/spisak-gostiju.module';
+import { AktivnostModule } from './modules/aktivnost/aktivnost.mobule';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { SpisakGostijuModule } from './modules/spisak-gostiju/spisak-gostiju.mod
     FirmaModule,
     ProjektniMenadzerModule,
     SpisakGostijuModule,
+    AktivnostModule,
   ],
   controllers: [],
   providers: [],
