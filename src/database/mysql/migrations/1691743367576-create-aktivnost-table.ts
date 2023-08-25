@@ -5,6 +5,7 @@ export class CreateAktivnostTable1691743367576 implements MigrationInterface {
     await queryRunner.query(
       `CREATE TABLE IF NOT EXISTS aktivnost ( \
             id_aktivnosti int NOT NULL AUTO_INCREMENT, \
+            naziv varchar(50) NOT NULL, \
             termin datetime NOT NULL, \
             PRIMARY KEY (id_aktivnosti) \
         )`,

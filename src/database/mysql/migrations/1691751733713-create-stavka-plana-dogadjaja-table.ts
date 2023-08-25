@@ -9,6 +9,7 @@ export class CreateStavkaPlanaDogadjajaTable1691751733713
             id_plana_dogadjaja int NOT NULL, \
             redni_broj_stavke int NOT NULL AUTO_INCREMENT, \
             broj_sale int NOT NULL, \
+            napomena varchar(500) NOT NULL, \
             id_aktivnosti int NOT NULL, \
             PRIMARY KEY (redni_broj_stavke, id_plana_dogadjaja), \
             FOREIGN KEY (id_plana_dogadjaja) REFERENCES plan_dogadjaja(id_plana_dogadjaja), \
