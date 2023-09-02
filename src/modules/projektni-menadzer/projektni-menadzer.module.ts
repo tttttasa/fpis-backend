@@ -9,6 +9,6 @@ import { ProjektniMenadzerRepository } from './projektni-menadzer.repository';
   imports: [TypeOrmModule.forFeature([ProjektniMenadzerEntity])],
   controllers: [ProjektniMenadzerController],
   providers: [ProjektniMenadzerRepository, ProjektniMenadzerService],
-  exports: [],
+  exports: [ProjektniMenadzerRepository],
 })
 export class ProjektniMenadzerModule {}

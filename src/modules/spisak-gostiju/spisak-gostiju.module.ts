@@ -9,6 +9,6 @@ import { SpisakGostijuRepository } from './spisak-gostiju.repository';
   imports: [TypeOrmModule.forFeature([SpisakGostijuEntity])],
   controllers: [SpisakGostijuController],
   providers: [SpisakGostijuRepository, SpisakGostijuService],
-  exports: [],
+  exports: [SpisakGostijuRepository],
 })
 export class SpisakGostijuModule {}

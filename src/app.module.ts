@@ -5,6 +5,8 @@ import { FirmaModule } from './modules/firma/firma.module';
 import { ProjektniMenadzerModule } from './modules/projektni-menadzer/projektni-menadzer.module';
 import { SpisakGostijuModule } from './modules/spisak-gostiju/spisak-gostiju.module';
 import { AktivnostModule } from './modules/aktivnost/aktivnost.mobule';
+import { PlanDogadjajModule } from './modules/plan-dogadjaja/plan-dogadjaja.module';
+import { StavkaPlanaDogadjajModule } from './modules/stavka-plana-dogadjaja/stavka-plana-dogadjaja.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { AktivnostModule } from './modules/aktivnost/aktivnost.mobule';
     ProjektniMenadzerModule,
     SpisakGostijuModule,
     AktivnostModule,
+    PlanDogadjajModule,
+    StavkaPlanaDogadjajModule,
   ],
   controllers: [],
   providers: [],
