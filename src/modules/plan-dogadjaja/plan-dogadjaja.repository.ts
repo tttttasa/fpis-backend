@@ -20,25 +20,11 @@ export class PlanDogadjajRepository {
     return this.repository.find({ where: { idProjektnogMenadzera: idPM } });
   }
 
-  public async insert(planDogadjaja: PlanDogadjajaDto): Promise<number> {
-    const formated: PlanDogadjajaBaseDto = {
-      idProjektnogMenadzera:
-        planDogadjaja.projektniMenadzer.idProjektnogMenadzera,
-      idSpiska: planDogadjaja.spisak.idSpiska,
+  public mapToEntity(plan: PlanDogadjajaDto): PlanDogadjajaEntity {
+    return {
+      idPlanaDogadjaja: plan.idPlanaDogadjaja,
+      idProjektnogMenadzera: plan.projektniMenadzer.idProjektnogMenadzera,
+      idSpiska: plan.spisak.idSpiska,
     };
-    return (await this.repository.insert(formated)).raw.insertId;
-  }
-
-  public update(planDogadjaja: PlanDogadjajaDto) {
-    const find: FindOptionsWhere<PlanDogadjajaEntity> = {
-      idPlanaDogadjaja: planDogadjaja.idPlanaDogadjaja,
-    };
-
-    this.repository.update(find, {
-      idPlanaDogadjaja: planDogadjaja.idPlanaDogadjaja,
-      idProjektnogMenadzera:
-        planDogadjaja.projektniMenadzer.idProjektnogMenadzera,
-      idSpiska: planDogadjaja.spisak.idSpiska,
-    });
   }
 }

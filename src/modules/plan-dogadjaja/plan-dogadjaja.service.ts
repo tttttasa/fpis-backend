@@ -6,6 +6,8 @@ import { StavkaPlanaDogadjajaEntity } from '../stavka-plana-dogadjaja/entity/sta
 import { ProjektniMenadzerRepository } from '../projektni-menadzer/projektni-menadzer.repository';
 import { SpisakGostijuRepository } from '../spisak-gostiju/spisak-gostiju.repository';
 import { PlanDogadjajaEntity } from './entity/plan-dogadjaja.entity';
+import { DataSource, getManager } from 'typeorm';
+import { PlanDogadjajaDto } from './dto/plan-dogadjaja.dto';
 
 @Injectable()
 export class PlanDogadjajaService {
@@ -14,6 +16,8 @@ export class PlanDogadjajaService {
     private readonly stavkeRepository: StavkaPlanaDogadjajRepository,
     private readonly pmRepository: ProjektniMenadzerRepository,
     private readonly spisakRepository: SpisakGostijuRepository,
+
+    private readonly dataSource: DataSource,
   ) {}
 
   public async findAll(): Promise<PlanDogadjajaDataDto[]> {
@@ -88,35 +92,48 @@ export class PlanDogadjajaService {
   }
 
   public async insert(planDogadjaja: PlanDogadjajaDataDto) {
-    const planDogadjajaId = await this.repository.insert(
-      planDogadjaja.planDogadjaja,
-    );
+    this.dataSource.manager.transaction(async (manager) => {
+      const planEntity = this.repository.mapToEntity(
+        planDogadjaja.planDogadjaja,
+      );
 
-    const stavkePlana = planDogadjaja.stavke.map((stavka) => {
-      return {
-        idPlanaDogadjaja: planDogadjajaId,
-        redniBrojStavke: stavka.redniBrojStavke,
-        idAktivnosti: stavka.aktivnost.idAktivnosti,
-        brojSale: stavka.brojSale,
-        napomena: stavka.napomena,
-      } as StavkaPlanaDogadjajaEntity;
-    });
+      const planDogadjajaId = await manager.insert(
+        PlanDogadjajaEntity,
+        planEntity,
+      );
 
-    stavkePlana.forEach((stavka) => {
-      this.stavkeRepository.insert(stavka);
+      const stavkeEntities = this.stavkeRepository.mapToEntity(
+        planDogadjajaId.raw.insertId,
+        planDogadjaja.stavke,
+      );
+
+      await manager.save(StavkaPlanaDogadjajaEntity, stavkeEntities);
     });
   }
 
   public async update(planDogadjaja: PlanDogadjajaDataDto) {
-    // Update plan dogadjaja
-    await this.repository.update(planDogadjaja.planDogadjaja);
+    this.dataSource.transaction(async (manager) => {
+      const planDogadjajaEntity = this.repository.mapToEntity(
+        planDogadjaja.planDogadjaja,
+      );
 
-    // Delete previous stavke
-    await this.stavkeRepository.delete(
-      planDogadjaja.planDogadjaja.idPlanaDogadjaja,
-    );
+      // Update plan dogadjaja
+      await manager.update(PlanDogadjajaEntity, planDogadjajaEntity, {
+        idPlanaDogadjaja: planDogadjajaEntity.idPlanaDogadjaja,
+      });
 
-    // Update stavke
-    await this.stavkeRepository.update(planDogadjaja.stavke);
+      // Delete previous stavke
+      await manager.delete(StavkaPlanaDogadjajaEntity, {
+        idPlanaDogadjaja: planDogadjajaEntity.idPlanaDogadjaja,
+      });
+
+      const stavkeEntities = this.stavkeRepository.mapToEntity(
+        planDogadjajaEntity.idPlanaDogadjaja,
+        planDogadjaja.stavke,
+      );
+
+      // Save new stavke
+      await manager.save(StavkaPlanaDogadjajaEntity, stavkeEntities);
+    });
   }
 }

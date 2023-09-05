@@ -10,10 +10,6 @@ export class ProjektniMenadzerRepository {
     private readonly repository: Repository<ProjektniMenadzerEntity>,
   ) {}
 
-  public findAll(): Promise<ProjektniMenadzerEntity[]> {
-    return this.repository.find();
-  }
-
   public find(id: number): Promise<ProjektniMenadzerEntity> {
     return this.repository.findOne({ where: { idProjektnogMenadzera: id } });
   }

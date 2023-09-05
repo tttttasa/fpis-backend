@@ -13,8 +13,4 @@ export class AktivnostRepository {
   public findAll(): Promise<AktivnostEntity[]> {
     return this.repository.find();
   }
-
-  public find(idAktivnosti: number): Promise<AktivnostEntity> {
-    return this.repository.findOne({ where: { idAktivnosti: idAktivnosti } });
-  }
 }

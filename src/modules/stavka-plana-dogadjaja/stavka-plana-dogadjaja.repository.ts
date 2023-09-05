@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { StavkaPlanaDogadjajaEntity } from './entity/stavka-plana-dogadjaja.entity';
 import { StavkaPlanaDogadjajaAktivnostJoinEntity } from './entity/stavka-plana-dogadjaja-aktivnost-join.interface';
 import { StavkaPlanaDogadjajaDto } from './dto/stavka-plana-dogadjaja.dto';
-import { PlanDogadjajaEntity } from '../plan-dogadjaja/entity/plan-dogadjaja.entity';
 
 @Injectable()
 export class StavkaPlanaDogadjajRepository {
@@ -12,10 +11,6 @@ export class StavkaPlanaDogadjajRepository {
     @InjectRepository(StavkaPlanaDogadjajaEntity)
     private readonly repository: Repository<StavkaPlanaDogadjajaEntity>,
   ) {}
-
-  public async insert(stavkaPlanaDogadjaja: StavkaPlanaDogadjajaEntity) {
-    this.repository.insert(stavkaPlanaDogadjaja);
-  }
 
   public async find(
     plandDogadjajId: number,
@@ -40,33 +35,17 @@ export class StavkaPlanaDogadjajRepository {
     });
   }
 
-  public async contains(idPlanaDogadjaja: number, redniBroj: number) {
-    const result = await this.repository.findOne({
-      where: { idPlanaDogadjaja: idPlanaDogadjaja, redniBrojStavke: redniBroj },
-    });
-
-    return result ? true : false;
-  }
-
-  public async update(stavkePlanaDogadjaja: StavkaPlanaDogadjajaDto[]) {
-    const idPlana = stavkePlanaDogadjaja[0].idPlanaDogadjaja;
-
-    for (const stavka of stavkePlanaDogadjaja) {
-      this.insert({
-        idPlanaDogadjaja: idPlana,
+  public mapToEntity(planId: number, stavke: StavkaPlanaDogadjajaDto[]) {
+    const stavkePlana = stavke.map((stavka) => {
+      return {
+        idPlanaDogadjaja: planId,
         redniBrojStavke: stavka.redniBrojStavke,
+        idAktivnosti: stavka.aktivnost.idAktivnosti,
         brojSale: stavka.brojSale,
         napomena: stavka.napomena,
-        idAktivnosti: stavka.aktivnost.idAktivnosti,
-      });
-    }
-  }
+      } as StavkaPlanaDogadjajaEntity;
+    });
 
-  public async delete(id: number) {
-    const find: FindOptionsWhere<StavkaPlanaDogadjajaEntity> = {
-      idPlanaDogadjaja: id,
-    };
-
-    this.repository.delete(find);
+    return stavkePlana;
   }
 }
