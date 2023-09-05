@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { FindOptionsWhere, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { StavkaPlanaDogadjajaEntity } from './entity/stavka-plana-dogadjaja.entity';
 import { StavkaPlanaDogadjajaAktivnostJoinEntity } from './entity/stavka-plana-dogadjaja-aktivnost-join.interface';
 import { StavkaPlanaDogadjajaDto } from './dto/stavka-plana-dogadjaja.dto';
+import { PlanDogadjajaEntity } from '../plan-dogadjaja/entity/plan-dogadjaja.entity';
 
 @Injectable()
 export class StavkaPlanaDogadjajRepository {
@@ -51,17 +52,21 @@ export class StavkaPlanaDogadjajRepository {
     const idPlana = stavkePlanaDogadjaja[0].idPlanaDogadjaja;
 
     for (const stavka of stavkePlanaDogadjaja) {
-      if (
-        !(await this.contains(stavka.idPlanaDogadjaja, stavka.redniBrojStavke))
-      ) {
-        this.insert({
-          idPlanaDogadjaja: idPlana,
-          redniBrojStavke: stavka.redniBrojStavke,
-          brojSale: stavka.brojSale,
-          napomena: stavka.napomena,
-          idAktivnosti: stavka.aktivnost.idAktivnosti,
-        });
-      }
+      this.insert({
+        idPlanaDogadjaja: idPlana,
+        redniBrojStavke: stavka.redniBrojStavke,
+        brojSale: stavka.brojSale,
+        napomena: stavka.napomena,
+        idAktivnosti: stavka.aktivnost.idAktivnosti,
+      });
     }
+  }
+
+  public async delete(id: number) {
+    const find: FindOptionsWhere<StavkaPlanaDogadjajaEntity> = {
+      idPlanaDogadjaja: id,
+    };
+
+    this.repository.delete(find);
   }
 }

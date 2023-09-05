@@ -7,7 +7,15 @@ export class SeedAktivnostTable1692976469666 implements MigrationInterface {
             naziv, \
             termin) \
         VALUES ( \
-            'Kuglanje', \
+            'Check in', \
+            '2023-08-28 10:00:00');`,
+    );
+    await queryRunner.query(
+      `INSERT INTO aktivnost ( \
+            naziv, \
+            termin) \
+        VALUES ( \
+            'Coffee break', \
             '2023-08-28 14:00:00');`,
     );
     await queryRunner.query(
@@ -15,24 +23,16 @@ export class SeedAktivnostTable1692976469666 implements MigrationInterface {
             naziv, \
             termin) \
         VALUES ( \
-            'Pikado', \
-            '2023-08-29 14:00:00');`,
+            'Lecture', \
+            '2023-08-28 12:00:00');`,
     );
     await queryRunner.query(
       `INSERT INTO aktivnost ( \
             naziv, \
             termin) \
         VALUES ( \
-            'Tenis', \
-            '2023-08-30 14:00:00');`,
-    );
-    await queryRunner.query(
-      `INSERT INTO aktivnost ( \
-            naziv, \
-            termin) \
-        VALUES ( \
-            'Ronjenje', \
-            '2023-08-31 14:00:00');`,
+            'Workshop', \
+            '2023-08-28 17:00:00');`,
     );
   }
 

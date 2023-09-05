@@ -111,6 +111,11 @@ export class PlanDogadjajaService {
     // Update plan dogadjaja
     await this.repository.update(planDogadjaja.planDogadjaja);
 
+    // Delete previous stavke
+    await this.stavkeRepository.delete(
+      planDogadjaja.planDogadjaja.idPlanaDogadjaja,
+    );
+
     // Update stavke
     await this.stavkeRepository.update(planDogadjaja.stavke);
   }
