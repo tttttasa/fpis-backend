@@ -6,8 +6,7 @@ import { StavkaPlanaDogadjajaEntity } from '../stavka-plana-dogadjaja/entity/sta
 import { ProjektniMenadzerRepository } from '../projektni-menadzer/projektni-menadzer.repository';
 import { SpisakGostijuRepository } from '../spisak-gostiju/spisak-gostiju.repository';
 import { PlanDogadjajaEntity } from './entity/plan-dogadjaja.entity';
-import { DataSource, getManager } from 'typeorm';
-import { PlanDogadjajaDto } from './dto/plan-dogadjaja.dto';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class PlanDogadjajaService {
@@ -35,6 +34,9 @@ export class PlanDogadjajaService {
           idPlanaDogadjaja: plan.idPlanaDogadjaja,
           projektniMenadzer: pm,
           spisak: spisak,
+          datumPocetka: new Date(plan.datumPocetka),
+          datumZavrsetka: new Date(plan.datumZavrsetka),
+          stanje: plan.stanje,
         },
         stavke: stavke,
       });
@@ -74,6 +76,9 @@ export class PlanDogadjajaService {
               imenaGostiju: spisak.imenaGostiju,
               prezimenaGostiju: spisak.prezimenaGostiju,
             },
+            datumPocetka: new Date(plan.datumPocetka),
+            datumZavrsetka: new Date(plan.datumZavrsetka),
+            stanje: plan.stanje,
           },
           stavke: stavkeEntities.map((entity) => {
             return {
@@ -118,13 +123,21 @@ export class PlanDogadjajaService {
       );
 
       // Update plan dogadjaja
-      await manager.update(PlanDogadjajaEntity, planDogadjajaEntity, {
-        idPlanaDogadjaja: planDogadjajaEntity.idPlanaDogadjaja,
-      });
+      await manager.update(
+        PlanDogadjajaEntity,
+        {
+          idPlanaDogadjaja: planDogadjaja.planDogadjaja.idPlanaDogadjaja,
+        },
+        planDogadjajaEntity,
+      );
 
       // Delete previous stavke
       await manager.delete(StavkaPlanaDogadjajaEntity, {
         idPlanaDogadjaja: planDogadjajaEntity.idPlanaDogadjaja,
+      });
+
+      const saas = await manager.find(PlanDogadjajaEntity, {
+        where: { idPlanaDogadjaja: planDogadjajaEntity.idPlanaDogadjaja },
       });
 
       const stavkeEntities = this.stavkeRepository.mapToEntity(
@@ -134,6 +147,18 @@ export class PlanDogadjajaService {
 
       // Save new stavke
       await manager.save(StavkaPlanaDogadjajaEntity, stavkeEntities);
+    });
+  }
+
+  public async delete(planId: number) {
+    this.dataSource.transaction(async (manager) => {
+      // Delete stavke
+      await manager.delete(StavkaPlanaDogadjajaEntity, {
+        idPlanaDogadjaja: planId,
+      });
+
+      // Delete plan
+      await manager.delete(PlanDogadjajaEntity, { idPlanaDogadjaja: planId });
     });
   }
 }

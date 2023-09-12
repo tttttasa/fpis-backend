@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { FirmaService } from '../firma/firma.service';
 import { FirmaEntity } from './entity/firma.entity';
 
@@ -24,5 +32,10 @@ export class FirmaController {
   @Put()
   public async putFirma(@Body() firma: FirmaEntity) {
     await this.service.update(firma);
+  }
+
+  @Delete(':firmaId')
+  public async deleteSpecificFirma(@Param('firmaId') firmaId: number) {
+    await this.service.delete(firmaId);
   }
 }

@@ -5,4 +5,7 @@ export interface PlanDogadjajaDto {
   idPlanaDogadjaja?: number;
   projektniMenadzer?: ProjektniMenadzerDto;
   spisak?: SpisakGostijuDto;
+  datumPocetka: Date;
+  datumZavrsetka: Date;
+  stanje: string;
 }

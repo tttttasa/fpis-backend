@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { PlanDogadjajaDataDto } from './dto/plan-dogadjaja-data.dto';
 import { PlanDogadjajaService } from './plan-dogadjaja.service';
 
@@ -24,5 +32,10 @@ export class PlanDogadjajaController {
   @Put()
   public putPlanDogadjaja(@Body() planDogadjaja: PlanDogadjajaDataDto) {
     this.service.update(planDogadjaja);
+  }
+
+  @Delete(':idPlana')
+  public deleteSpecificPlan(@Param('idPlana') idPlana: number) {
+    this.service.delete(idPlana);
   }
 }

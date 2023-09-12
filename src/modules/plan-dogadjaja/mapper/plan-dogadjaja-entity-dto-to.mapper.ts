@@ -7,11 +7,15 @@ export class PlanDogadjajaDtoToEntityMapper extends BaseEntityMapper<
   PlanDogadjajaDto
 > {
   toEntity(dto: PlanDogadjajaDto): PlanDogadjajaEntity {
-    const { projektniMenadzer, spisak } = dto;
+    const { projektniMenadzer, spisak, datumPocetka, datumZavrsetka, stanje } =
+      dto;
 
     return {
       idProjektnogMenadzera: projektniMenadzer.idProjektnogMenadzera,
       idSpiska: spisak.idSpiska,
+      datumPocetka: datumPocetka.toString(),
+      datumZavrsetka: datumZavrsetka.toString(),
+      stanje: stanje,
     } as PlanDogadjajaEntity;
   }
 }

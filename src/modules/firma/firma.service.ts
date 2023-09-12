@@ -22,4 +22,8 @@ export class FirmaService {
   public update(firma: FirmaEntity) {
     return this.repository.update(firma);
   }
+
+  public delete(firmaId: number) {
+    return this.repository.delete(firmaId);
+  }
 }

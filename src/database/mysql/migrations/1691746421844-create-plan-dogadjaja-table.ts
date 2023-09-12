@@ -9,6 +9,9 @@ export class CreatePlanDogadjajaTable1691746421844
             id_plana_dogadjaja int NOT NULL AUTO_INCREMENT, \
             id_projektnog_menadzera int NOT NULL, \
             id_spiska int NOT NULL, \
+            datum_pocetka date NOT NULL, \
+            datum_zavrsetka date NOT NULL, \
+            stanje varchar(25) DEFAULT 'popunjen', \
             PRIMARY KEY (id_plana_dogadjaja), \
             FOREIGN KEY (id_projektnog_menadzera) REFERENCES projektni_menadzer(id_projektnog_menadzera), \
             FOREIGN KEY (id_spiska) REFERENCES spisak_gostiju(id_spiska) \
